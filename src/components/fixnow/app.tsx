@@ -227,7 +227,7 @@ function HomeScreen() {
 
 function ServiceScreen() {
   const { go, draft, setDraft, toast } = useApp();
-  const svc = SERVICES.find((s) => s.id === draft.serviceId) ?? SERVICES[0];
+  const svc = SERVICES.find((s) => s.id === draft.serviceId) ?? SERVICES[0]!;
   return (
     <div className="fx-fade min-h-full bg-background">
       <Head title={svc.name} onBack={() => go("home")} />
@@ -280,7 +280,7 @@ function LocationScreen() {
           <span className="absolute bottom-2 left-2 rounded-lg bg-card px-2 py-1 text-[10px] font-semibold">Agra, Uttar Pradesh</span>
         </div>
         <div className="grid grid-cols-2 gap-3">
-          <Btn variant="outline" onClick={() => { setDraft({ address: ADDRESSES[0].line }); toast("Using current location."); }}><Navigation className="size-4" /> Current</Btn>
+          <Btn variant="outline" onClick={() => { setDraft({ address: ADDRESSES[0]!.line }); toast("Using current location."); }}><Navigation className="size-4" /> Current</Btn>
           <Btn variant="outline" onClick={() => toast("Search is simulated in demo mode.")}><Search className="size-4" /> Search</Btn>
         </div>
         <div className="overflow-hidden rounded-2xl border border-border bg-card">
@@ -301,7 +301,7 @@ function LocationScreen() {
 
 function Summary() {
   const { go, draft, createBooking, toast } = useApp();
-  const svc = SERVICES.find((s) => s.id === draft.serviceId) ?? SERVICES[0];
+  const svc = SERVICES.find((s) => s.id === draft.serviceId) ?? SERVICES[0]!;
   const rows = [
     ["Service", svc.name], ["Problem", draft.problem ?? "—"], ["Location", draft.address ?? "—"],
     ["Response", "10–15 minutes"], ["Estimated visit fee", `₹${svc.visit}`], ["Estimated repair cost", svc.range],
@@ -822,7 +822,7 @@ function SOS() {
       <div className="mt-6">
         <Btn onClick={() => {
           if (!pick) return toast("Please select a service first.");
-          setDraft({ serviceId: pick, problem: "Emergency — " + (SERVICES.find((s) => s.id === pick)?.problems[0] ?? "Urgent issue"), address: ADDRESSES[0].line, note: "SOS emergency request" });
+          setDraft({ serviceId: pick, problem: "Emergency — " + (SERVICES.find((s) => s.id === pick)?.problems[0] ?? "Urgent issue"), address: ADDRESSES[0]!.line, note: "SOS emergency request" });
           setTimeout(() => { createBooking(); go("matching"); }, 0);
         }}>Find Technician Now</Btn>
       </div>

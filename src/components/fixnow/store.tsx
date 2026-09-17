@@ -44,7 +44,7 @@ export type Booking = {
   diagnosis: string; createdAt: string;
 };
 
-type Draft = { serviceId?: string; problem?: string; note?: string; address?: string };
+type Draft = { serviceId?: string | undefined; problem?: string | undefined; note?: string | undefined; address?: string | undefined };
 
 type State = {
   user: { name: string; email: string; phone: string } | null;
@@ -64,9 +64,9 @@ const seed = (): State => ({
     { id: "w3", label: "Electrical Repair", amount: -199 },
   ],
   bookings: [
-    { id: "FN739821", service: "Laptop & Computer", serviceId: "laptop", problem: "Overheating", note: "", address: "Sanjay Place, Agra", status: "completed", eta: 0, tech: TECHNICIANS[3], visit: 149, repair: 1050, charge: 50, total: 1249, paid: true, diagnosis: "Thermal paste replaced", createdAt: "12 Sep, 4:10 PM", rating: 5 },
-    { id: "FN728491", service: "AC Repair", serviceId: "ac", problem: "Not Cooling", note: "", address: "MG Road, Agra", status: "completed", eta: 0, tech: TECHNICIANS[2], visit: 199, repair: 1650, charge: 50, total: 1899, paid: true, diagnosis: "Gas refill + coil clean", createdAt: "28 Aug, 11:20 AM", rating: 4 },
-    { id: "FN711204", service: "Plumbing", serviceId: "plumbing", problem: "Pipe Leakage", note: "", address: "St. John's College, Agra", status: "cancelled", eta: 0, tech: TECHNICIANS[1], visit: 99, repair: 0, charge: 0, total: 0, paid: false, diagnosis: "", createdAt: "19 Aug, 9:05 AM" },
+    { id: "FN739821", service: "Laptop & Computer", serviceId: "laptop", problem: "Overheating", note: "", address: "Sanjay Place, Agra", status: "completed", eta: 0, tech: TECHNICIANS[3]!, visit: 149, repair: 1050, charge: 50, total: 1249, paid: true, diagnosis: "Thermal paste replaced", createdAt: "12 Sep, 4:10 PM", rating: 5 },
+    { id: "FN728491", service: "AC Repair", serviceId: "ac", problem: "Not Cooling", note: "", address: "MG Road, Agra", status: "completed", eta: 0, tech: TECHNICIANS[2]!, visit: 199, repair: 1650, charge: 50, total: 1899, paid: true, diagnosis: "Gas refill + coil clean", createdAt: "28 Aug, 11:20 AM", rating: 4 },
+    { id: "FN711204", service: "Plumbing", serviceId: "plumbing", problem: "Pipe Leakage", note: "", address: "St. John's College, Agra", status: "cancelled", eta: 0, tech: TECHNICIANS[1]!, visit: 99, repair: 0, charge: 0, total: 0, paid: false, diagnosis: "", createdAt: "19 Aug, 9:05 AM" },
   ],
 });
 
@@ -127,13 +127,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setState((s) => ({ ...s, bookings: s.bookings.map((b) => (b.id === id ? { ...b, ...u } : b)) }));
 
   const createBooking = () => {
-    const svc = SERVICES.find((s) => s.id === draft.serviceId) ?? SERVICES[0];
-    const tech = TECHNICIANS[Math.floor(Math.random() * TECHNICIANS.length)];
+    const svc = SERVICES.find((s) => s.id === draft.serviceId) ?? SERVICES[0]!;
+    const tech = TECHNICIANS[Math.floor(Math.random() * TECHNICIANS.length)]!;
     const b: Booking = {
       id: "FN" + Math.floor(100000 + Math.random() * 899999),
       service: svc.name, serviceId: svc.id,
-      problem: draft.problem ?? svc.problems[0], note: draft.note ?? "",
-      address: draft.address ?? ADDRESSES[0].line,
+      problem: draft.problem ?? svc.problems[0]!, note: draft.note ?? "",
+      address: draft.address ?? ADDRESSES[0]!.line,
       status: "searching", eta: tech.eta, tech,
       visit: svc.visit, repair: 699, charge: 50, total: svc.visit + 699 + 50,
       paid: false, diagnosis: "", createdAt: new Date().toLocaleString("en-IN", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }),
