@@ -151,3 +151,28 @@
     color: var(--color-foreground);
   }
 }
+
+@theme inline {
+  --color-navy: var(--navy);
+  --color-navy-2: var(--navy-2);
+  --color-success: var(--success);
+  --color-info: var(--info);
+}
+
+@keyframes fixnow-radar { 0% { transform: scale(0.4); opacity: 0.85 } 100% { transform: scale(2.2); opacity: 0 } }
+@keyframes fixnow-fade { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: none } }
+@keyframes fixnow-pop { 0% { transform: scale(0.6); opacity: 0 } 60% { transform: scale(1.08) } 100% { transform: scale(1); opacity: 1 } }
+@keyframes fixnow-pulse-red { 0%,100% { box-shadow: 0 0 0 0 oklch(0.58 0.235 27.5 / 0.55) } 50% { box-shadow: 0 0 0 14px oklch(0.58 0.235 27.5 / 0) } }
+
+@utility fx-radar { animation: fixnow-radar 1.8s ease-out infinite; }
+@utility fx-fade { animation: fixnow-fade 0.35s ease-out both; }
+@utility fx-pop { animation: fixnow-pop 0.45s cubic-bezier(.2,.9,.3,1.2) both; }
+@utility fx-pulse { animation: fixnow-pulse-red 2s ease-out infinite; }
+@utility fx-press { transition: transform .12s ease, opacity .12s ease; &:active { transform: scale(0.96); } }
+@utility fx-map {
+  background-image:
+    linear-gradient(0deg, oklch(0.88 0.02 240 / 0.5) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.88 0.02 240 / 0.5) 1px, transparent 1px),
+    linear-gradient(140deg, oklch(0.94 0.02 150), oklch(0.93 0.015 230));
+  background-size: 38px 38px, 38px 38px, 100% 100%;
+}
