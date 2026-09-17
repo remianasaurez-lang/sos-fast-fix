@@ -803,7 +803,7 @@ function Help() {
 
 function SOS() {
   const { go, setDraft, createBooking, toast } = useApp();
-  const quick = [["mobile", "Phone"], ["laptop", "Laptop"], ["tv", "TV"], ["fridge", "Appliance"], ["electrical", "Electrical"], ["car", "Car"], ["other", "Other"]];
+  const quick: [string, string][] = [["mobile", "Phone"], ["laptop", "Laptop"], ["tv", "TV"], ["fridge", "Appliance"], ["electrical", "Electrical"], ["car", "Car"], ["other", "Other"]];
   const [pick, setPick] = useState<string | null>(null);
   return (
     <div className="fx-fade min-h-full p-5 text-primary-foreground" style={{ background: "var(--gradient-night)" }}>
